@@ -1,5 +1,6 @@
 {
   "variables": {
+        "hostname": "ubuntu-trusty-14-04-02",
         "ssh_name": "vagrant",
         "ssh_pass": "vagrant"
   },
@@ -12,13 +13,26 @@
     "disk_size": 81920,
     "hard_drive_interface": "sata",
 
-    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04-server-amd64.iso",
-    "iso_checksum": "4d94f6111b8fe47da94396180ce499d8c0bb44f3",
+    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.2-server-amd64.iso",
+    "iso_checksum": "3bfa6eac84d527380d0cc52db9092cde127f161e",
     "iso_checksum_type": "sha1",
+
+    "http_directory": "http",
+
+    "boot_command": [
+      "<esc><esc><enter><wait>",
+      "/install/vmlinuz noapic ",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/trusty/preseed.cfg ",
+      "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+      "hostname={{user `hostname`}} ",
+      "fb=false debconf/frontend=noninteractive ",
+      "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+      "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+      "initrd=/install/initrd.gz -- <enter>"
+    ],
 
     "boot_wait": "12s",
 
-    "http_directory": "http",
     "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
 
     "ssh_username": "{{user `ssh_name`}}",
